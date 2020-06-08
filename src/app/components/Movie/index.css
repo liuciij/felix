@@ -1,0 +1,41 @@
+.Movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 270px;
+    /* height: 390px; */
+    margin: -35px 45px;
+
+}
+
+.Movie__content {
+    position: relative;
+    top: -100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 270px;
+    height: 168px;
+    /* text-align: center; */
+    background: #222222;
+    margin: 0;
+     
+}
+
+.Movie__content > div {
+    width: 240px;
+    margin: 10px auto;
+}
+
+.Movie__img {
+    width: 270px;
+    /* height: 335px; */
+    
+}
+
+.Movie__button {
+    float: left;
+}
+
