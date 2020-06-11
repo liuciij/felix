@@ -5,6 +5,8 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 19px;
+    text-decoration: none;
+    /* cursor: pointer; */
 }
 
 .Large {
@@ -17,6 +19,7 @@
 
 .checked {
     background: transparent;
+    border: 1px solid #E50914;
 }
 
 .removed {
