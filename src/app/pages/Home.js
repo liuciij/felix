@@ -65,7 +65,8 @@ function Home({ favorites, changeButton }) {
                   description={item.description}
                   button={favorites.includes(item.id) ? "Remove💔" : "Favorite"}
                   onclick={() => changeButton(item.id)}
-                  // id={item.id}
+                  id={item.id}
+                  //jei id sito neparasai tai neranda id kai paspaudi ant filmo 
                   isFavorite={favorites.includes(item.id)}
                 />
               )}

@@ -49,7 +49,7 @@ function Private({ favorites, changeButton }) {
                                 description={item.description}
                                 button={favorites.includes(item.id) ? "Remove💔" : "Favorite"}
                                 onclick={() => changeButton(item.id)}
-                                // id={item.id}
+                                id={item.id}
                                 isFavorite={favorites.includes(item.id)}
                             />
                         )}

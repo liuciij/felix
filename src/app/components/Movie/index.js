@@ -1,18 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./index.css";
 import Button from "../Button";
 import Title from "../Title";
 
 
 
-function Movie({ img, title, name, className, description, button, onclick, isFavorite, id, goToMovie }) {
 
-    // const makeSlug = (title) => {
-    //     title
-    //         .toLowerCase()
-    //         .split(' ');
-    //     const slugTitle = title.forEach(word => word + "-")
-    // }
+function Movie({ img, title, name, className, description, button, onclick, isFavorite, id }) {
+
+
 
 
 
@@ -33,13 +30,15 @@ function Movie({ img, title, name, className, description, button, onclick, isFa
 
     return (
         <div className={classes}>
-            <img class="Movie__img" src={`${img}`} />
+            <Link class="Link" to={`/${id}`}>
+                <img class="Movie__img" src={`${img}`} />
+            </Link>
             <div class="Movie__content">
 
-                <div>
+                <Link class="Link" to={`/${id}`}>
                     <Title level="3">{title}</Title>
                     <p>{shortDescription}</p>
-                </div>
+                </Link>
                 <div>
                     <Button size="Small" id={id} onclick={onclick} state={isFavorite ? "favorite" : "regular"}>{button}</Button>
                 </div>
@@ -47,5 +46,7 @@ function Movie({ img, title, name, className, description, button, onclick, isFa
         </div >
     );
 };
+
+
 
 export default Movie;
