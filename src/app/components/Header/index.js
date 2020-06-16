@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 
 
 
+
 function Header({ }) {
     return (
         <header>
@@ -19,7 +20,7 @@ function Header({ }) {
                     <Button to="/login" size="Large">Sign In</Button>
                 </Route>
                 <Route exact path="/private">
-                    <Button to="/private" size="Large">Log Out</Button>
+                    <Button to="/home" size="Large">Log Out</Button>
                 </Route>
             </Switch>
         </header >

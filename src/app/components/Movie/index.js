@@ -5,7 +5,18 @@ import Title from "../Title";
 
 
 
-function Movie({ img, title, name, className, description, button, onclick, isFavorite, id, state }) {
+function Movie({ img, title, name, className, description, button, onclick, isFavorite, id, goToMovie }) {
+
+    // const makeSlug = (title) => {
+    //     title
+    //         .toLowerCase()
+    //         .split(' ');
+    //     const slugTitle = title.forEach(word => word + "-")
+    // }
+
+
+
+
     const classes = `Movie ${className}`;
 
     let fullDescription = description.split(' ');

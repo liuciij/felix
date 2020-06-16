@@ -1,36 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import '../index.scss';
+import loadingImg from "../images/loading.gif";
 import Button from "../components/Button";
 import Movie from "../components/Movie";
 
 
 
-class Private extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            button: "Favorite",
-            favorites: [],
-        };
-
-    }
-
-    changeButton = id => {
-        let { favorites } = this.state;
-        console.log(id);
-        if (favorites.includes(id)) {
-            console.log(id);
-            this.setState({ favorites: favorites.filter(item => item != id) }) //pasalina
-        } else {
-            this.setState({ favorites: favorites.concat(id) }) //prideda 
-            console.log(id);
-        }
-    }
+function Private({ favorites, changeButton }) {
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(false);
 
 
-
-    async componentDidMount() {
+    const fetchMovies = useCallback(async () => {
+        setLoading(true);
 
         try {
             let response = await fetch(`https://academy-video-api.herokuapp.com/content/items`, {
@@ -38,25 +20,26 @@ class Private extends React.Component {
                 headers: { authorization: localStorage.getItem("token") }
             })
             console.log(response);
-            response = await response.json();
-            this.setState(
-                {
-                    items: response,
-                },
-            );
+            setItems(await response.json());
+            // setitems(response);
 
         } catch (e) {
             console.log(e);
         }
-    }
+        setLoading(false);
+    }, [setItems, setLoading]);
 
+    useEffect(() => {
+        fetchMovies();
+    }, [fetchMovies]);
 
-    render() {
-        const { items } = this.state;
+    // render() {
+    // const { items } = this.state;
 
-        return (
-            <main>
-                <div class="main__container">
+    return (
+        <main>
+            {loading ? <img className="loading__img" src={loadingImg} alt="loading" />
+                : <div class="main__container">
                     <div class="movies__container">
                         {items.map(item =>
                             <Movie
@@ -64,20 +47,18 @@ class Private extends React.Component {
                                 img={item.image}
                                 title={item.title}
                                 description={item.description}
-                                button={this.state.favorites.includes(item.id) ? "Remove💔" : "Favorite"}
-                                onclick={() => this.changeButton(item.id)}
+                                button={favorites.includes(item.id) ? "Remove💔" : "Favorite"}
+                                onclick={() => changeButton(item.id)}
                                 // id={item.id}
-                                isFavorite={this.state.favorites.includes(item.id)}
+                                isFavorite={favorites.includes(item.id)}
                             />
                         )}
-
                     </div>
-
-                    {/* <Button className="content__button" size="Large" style="230">Get More Content</Button> */}
                 </div>
-            </main>
-        );
-    }
+            }
+        </main>
+    );
+    // }
 }
 
 
