@@ -4,9 +4,10 @@ import { Link, useHistory, useLocation, withRouter } from "react-router-dom";
 import Button from "../components/Button";
 import FailureMessage from '../components/FailureMessage';
 import eye from "../images/eye.png";
+import { connect } from "react-redux";
 
 
-function Login({ history }) {
+function Login({ token, setToken }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [failureMessage, setfailureMessage] = useState(false);
@@ -14,7 +15,7 @@ function Login({ history }) {
     const [items, setItems] = useState([]);
 
     //username: tester, password: netflix
-
+    const history = useHistory();
     const getUsername = (event) => {
         setUsername(event.target.value)
         console.log(event.target.value);
@@ -24,6 +25,7 @@ function Login({ history }) {
         setPassword(event.target.value)
         console.log(event.target.value);
     }
+
 
 
     //nereikia useeffect, nes viskas priklauso nuo vartotojo interakcijos siuo atveju kai paspaudzia mygtuka
@@ -48,6 +50,7 @@ function Login({ history }) {
             })
             .then(response => {
                 localStorage.setItem("token", response.token);
+                setToken(response.token);
                 console.log(response);
                 history.replace("/private");
             })
@@ -77,5 +80,21 @@ function Login({ history }) {
 
 
 
+function mapStateToProps({ authentication: { token } }) {
+    return {
+        token: token,
+
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setToken: token => dispatch({ type: "SET_TOKEN", token })
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login); //connect priima dvi funkcijas: pirma funkcija is store leis nuskaityt ir subscribint duomenis, antra skirta rasyti veiksmams kuriuos per peopsus pasieksim
+
 // export default Login;
-export default withRouter(Login);
+// export default withRouter(Login);

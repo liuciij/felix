@@ -10,67 +10,57 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 
+import store from "./state";
+import provider, { Provider } from "react-redux"; //provider yra komponentas kuriam paduodam store, tokiu budu store pasidaro prieinama visoj aplikacijoj. Tie komponentai kurie bus aprepti provider bus prieinama(ziureti zemiau)
+
 
 function App() {
 
-    // logout = () => {
-    //     fetch("https://academy-video-api.herokuapp.com/auth/logout", {
-    //         method: "POST",
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ token: localStorage.getItem("token") })
-    //     }).then(res => {
-    //         if (!res.ok) {
-    //             throw res;
-    //         }
-    //         console.log(res);
-    //         localStorage.clear();
-    // this.props.history.replace("/")
-    //     });
-    // };
+
+    // const [favorites, setFavorites] = useState([]);
+    // const changeButton = id => {
+    //     console.log(id);
+    //     if (favorites.includes(id)) {
+    //         console.log(id);
+    //         setFavorites(favorites.filter(item => item != id)) //pasalina
+    //     } else {
+    //         setFavorites(favorites.concat(id)) //prideda 
+    //         console.log(id);
+    //     }
+    // }
 
 
-
-
-    const [favorites, setFavorites] = useState([]);
-    const changeButton = id => {
-        console.log(id);
-        if (favorites.includes(id)) {
-            console.log(id);
-            setFavorites(favorites.filter(item => item != id)) //pasalina
-        } else {
-            setFavorites(favorites.concat(id)) //prideda 
-            console.log(id);
-        }
-    }
-
-    console.log(favorites);
     return (
-        <Router>
-            <Header />
-            <Switch>
-                <Route exact path="/home">
-                    <Home favorites={favorites} changeButton={changeButton} />
-                </Route>
-                <Route exact path="/login">
-                    <Login />
-                </Route>
-                {/* <Route exact path="/private">
+        //paduodam store propsa provaideriui
+        <Provider store={store}>
+            <Router>
+                <Header />
+                <Switch>
+                    <Route exact path="/home">
+                        <Home />
+                    </Route>
+                    <Route exact path="/login">
+                        <Login />
+                    </Route>
+                    {/* <Route exact path="/private">
                     <Private />
                 </Route> */}
-                {/* privateroute componentas yra kaip papildoma logika, kad jei vartotojas bando prieit prie token reikalaujanciu puslapiu, nukreipiamas i login */}
-                <PrivateRoute exact path="/private">
-                    <Private favorites={favorites} changeButton={changeButton} />
-                </PrivateRoute>
-                <Route exact path="/:id">
-                    <SingleMovie favorites={favorites} changeButton={changeButton} />
-                </Route>
-                {/*  su redirect'u jei vartotojas nueina ant betkokio neegzistuojancio psl, bus nukreiptas i home arba jei prisijunges i filmus visus  */}
-                {/* <Redirect exact to={localStorage.getItem("token") ? "/private" : "/home"} /> */}
+                    {/* privateroute componentas yra kaip papildoma logika, kad jei vartotojas bando prieit prie token reikalaujanciu puslapiu, nukreipiamas i login */}
+                    <PrivateRoute exact path="/private">
+                        {/* <Private favorites={favorites} changeButton={changeButton} /> */}
+                        <Private />
+                    </PrivateRoute>
+                    <Route exact path="/:id">
+                        <SingleMovie />
+                    </Route>
+                    {/*  su redirect'u jei vartotojas nueina ant betkokio neegzistuojancio psl, bus nukreiptas i home arba jei prisijunges i filmus visus  */}
+                    {/* <Redirect exact to={localStorage.getItem("token") ? "/private" : "/home"} /> */}
 
 
-            </Switch>
-            <Footer />
-        </Router>
+                </Switch>
+                <Footer />
+            </Router>
+        </Provider >
     );
 }
 
