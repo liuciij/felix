@@ -5,6 +5,8 @@ import Button from "../components/Button";
 import FailureMessage from '../components/FailureMessage';
 import eye from "../images/eye.png";
 import { connect } from "react-redux";
+import authentication from "../../authentication";
+import { bindActionCreators } from "redux";
 
 
 function Login({ token, setToken }) {
@@ -89,7 +91,7 @@ function mapStateToProps({ authentication: { token } }) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        setToken: token => dispatch({ type: "SET_TOKEN", token })
+        setToken: bindActionCreators(authentication.actions.setToken, dispatch)
     }
 }
 

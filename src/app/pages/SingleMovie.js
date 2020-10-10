@@ -1,9 +1,13 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
+ 
 import '../../app/index.scss';
 import SingleMoviePage from "../components/SingleMoviePage";
 import Movie from "../components/Movie";
 import { connect } from "react-redux";
+
+import content from "../../content";
+import { bindActionCreators } from "redux";
 
 function SingleMovie({ favorites, changeButton, movie, setItem, token }) {
     // const [item, setItem] = useState({});
@@ -57,7 +61,7 @@ function mapStateToProps({ content: { movie }, authentication: { token } }) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        setItem: movie => dispatch({ type: "GET_MOVIE", movie })
+        setItem: bindActionCreators(content.actions.getMovie, dispatch)
     }
 }
 

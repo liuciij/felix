@@ -4,6 +4,8 @@ import loadingImg from "../images/loading.gif";
 import Button from "../components/Button";
 import Movie from "../components/Movie";
 import { connect } from "react-redux";
+import content from "../../content";
+import { bindActionCreators } from "redux";
 
 
 
@@ -21,7 +23,7 @@ function Private({ favorites, changeButton, movies, setItems, token }) {
                 method: "GET",
                 headers: {
                     // authorization: localStorage.getItem("token") 
-                    authorisation: token
+                    authorization: token
                 }
             })
             console.log(response);
@@ -77,7 +79,7 @@ function mapStateToProps({ content: { movies }, authentication: { token } }) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        setItems: movies => dispatch({ type: "FETCH_MOVIES", movies })
+        setItems: bindActionCreators(content.actions.fetchMovies, dispatch)
     }
 }
 

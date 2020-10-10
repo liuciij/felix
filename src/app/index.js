@@ -54,7 +54,7 @@ function App() {
                         <SingleMovie />
                     </Route>
                     {/*  su redirect'u jei vartotojas nueina ant betkokio neegzistuojancio psl, bus nukreiptas i home arba jei prisijunges i filmus visus  */}
-                    {/* <Redirect exact to={localStorage.getItem("token") ? "/private" : "/home"} /> */}
+                    <Redirect exact to={localStorage.getItem("token") ? "/private" : "/home"} />
 
 
                 </Switch>

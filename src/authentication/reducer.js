@@ -1,3 +1,5 @@
+import * as types from "./types";
+
 const DEFAULT_TOKEN_STATE = {
     token: localStorage.getItem("token"),
 }
@@ -7,7 +9,7 @@ const DEFAULT_TOKEN_STATE = {
 
 function tokenReducer(state = DEFAULT_TOKEN_STATE, action) {
     switch (action.type) {
-        case "SET_TOKEN": {
+        case types.SET_TOKEN: {
             return { ...state, token: action.token }
         }
         default:

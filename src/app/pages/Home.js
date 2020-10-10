@@ -14,6 +14,9 @@ import { connect } from "react-redux";
 import SimpleButton from "../components/SimpleButton";
 import { useHistory } from "react-router-dom";
 
+import content from "../../content";
+import { bindActionCreators } from "redux";
+
 
 
 
@@ -31,21 +34,21 @@ function Home({ favorites, changeButton, movies, setItems }) {
 
     setLoading(true);
 
-    // try {
-    const response = await fetch(`https://academy-video-api.herokuapp.com/content/free-items`
-      // {
-      //   method: "GET",
-      //   headers: { "Content-Type": "application/json" }
-      //}
-    )
-    if (response.ok) {
-      setItems(await response.json());
-    } else {
-      console.log(response)
+    try {
+      const response = await fetch(`https://academy-video-api.herokuapp.com/content/free-items`
+        // {
+        //   method: "GET",
+        //   headers: { "Content-Type": "application/json" }
+        //}
+      )
+      if (response.ok) {
+        setItems(await response.json());
+      } else {
+        console.log(response)
+      }
+    } catch (e) {
+      console.log(e);
     }
-    // } catch (e) {
-    //   console.log(e);
-    // }
     console.log('veikia')
     setLoading(false);
   }, [setItems, setLoading]);
@@ -107,7 +110,7 @@ function mapStateToProps({ content: { movies } }) {
 //kai isdispatchinam action, jis nukeliauja i reducerius, kur atliekam kazkokius veiksmus, sukuriam nauja state, tada tuose komponentuose kurie subscrinina ta state yra iskvieciama mapsstatetoprops funkcija kur propsai persimapina ir jei jie pakito, ivyksta rerenderis
 function mapDispatchToProps(dispatch) {
   return {
-    setItems: movies => dispatch({ type: "FETCH_MOVIES", movies })
+    setItems: bindActionCreators(content.actions.fetchMovies, dispatch)
   }
 }
 
